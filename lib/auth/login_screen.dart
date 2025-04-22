@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
 
                         try {
-                          await auth.login(email, password);
+                          await auth.login(email, password, context);
                         } catch (e) {
                           log(e.toString());
                         }

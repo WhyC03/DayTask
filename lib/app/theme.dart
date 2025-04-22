@@ -8,6 +8,10 @@ class AppTheme {
       primaryColor: const Color(0xFFFED36A), // Yellow Accent
       hintColor: Colors.white70,
       fontFamily: 'Poppins',
+      appBarTheme: AppBarTheme(
+        backgroundColor: const Color(0xFF263238),
+        elevation: 0,
+      ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: const Color(0xFF455A64),

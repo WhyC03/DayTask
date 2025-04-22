@@ -131,7 +131,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 }
 
                                 try {
-                                  await auth.signUp(email, password, fullName);
+                                  await auth.signUp(email, password, fullName, context);
                                 } catch (e) {
                                   log(e.toString());
                                 }

@@ -1,7 +1,7 @@
 class Task {
-  final int id;
+  final String id;
   final String title;
-  final String description; // <-- New field
+  final String description;
   final bool isCompleted;
 
   Task({
@@ -14,9 +14,9 @@ class Task {
   factory Task.fromMap(Map<String, dynamic> map) {
     return Task(
       id: map['id'],
-      title: map['title'],
+      title: map['title'] ?? '',
       description: map['description'] ?? '',
-      isCompleted: map['is_completed'],
+      isCompleted: map['is_completed'] ?? false,
     );
   }
 
@@ -27,5 +27,20 @@ class Task {
       'description': description,
       'is_completed': isCompleted,
     };
+  }
+
+  // Add the copyWith method
+  Task copyWith({
+    String? id,
+    String? title,
+    String? description,
+    bool? isCompleted,
+  }) {
+    return Task(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      isCompleted: isCompleted ?? this.isCompleted,
+    );
   }
 }

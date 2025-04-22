@@ -1,4 +1,6 @@
+import 'package:daytask/services/navigation_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -37,7 +39,7 @@ class AuthProvider with ChangeNotifier {
     });
   }
 
-  Future<void> signUp(String email, String password, String fullName) async {
+  Future<void> signUp(String email, String password, String fullName,BuildContext context) async {
     final response = await _client.auth.signUp(
       email: email,
       password: password,
@@ -45,18 +47,16 @@ class AuthProvider with ChangeNotifier {
 
     final user = response.user;
     if (user != null) {
-      await _client.from('profiles').insert({
-        'id': user.id,
-        'name': fullName,
-      });
+      await _client.from('profiles').insert({'id': user.id, 'name': fullName});
       _fullName = fullName;
     }
     notifyListeners();
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> login(String email, String password,BuildContext context) async {
     await _client.auth.signInWithPassword(email: email, password: password);
     await fetchProfile();
+    context.read<NavigationProvider>().navigateTohome(context);
     notifyListeners();
   }
 
@@ -72,11 +72,7 @@ class AuthProvider with ChangeNotifier {
     if (userId == null) return;
 
     final response =
-        await _client
-            .from('profiles')
-            .select('name')
-            .eq('id', userId)
-            .single();
+        await _client.from('profiles').select('name').eq('id', userId).single();
 
     _fullName = response['name'];
     notifyListeners();

@@ -32,4 +32,8 @@ class NavigationProvider with ChangeNotifier {
       MaterialPageRoute(builder: (context) => const HomeScreen()),
     );
   }
+
+  void navigateBack(BuildContext context) {
+    Navigator.pop(context);
+  }
 }
